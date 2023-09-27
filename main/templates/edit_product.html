@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Shopping List</span>
+    <a class="navbar-brand" href="#">Toko Kadal Patrick</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -20,10 +22,10 @@
             Dropdown
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'main:create_product' %}">Add Product</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{% url 'main:logout' %}">Logout</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -38,47 +40,19 @@
   </div>
 </nav>
 
-<h1>Shopping list</h1>
+<h1>Edit Product</h1>
 
-	<h5>Name: </h5>
-	<p>{{ name }}<p>
-	<h5>Class: </h5>
-	<p>{{ class }}<p>
-	
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>Price</th>
-			<th>Description</th>
-			<th>Date Added</th>
-		</tr>
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Edit Product"/>
+            </td>
+        </tr>
+    </table>
+</form>
 
-		{% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
-
-		{% for product in products %}
-			<tr>
-				<td>{{product.name}}</td>
-				<td>{{product.price}}</td>
-				<td>{{product.description}}</td>
-				<td>{{product.date_added}}</td>
-                <td>
-                    <a href="{% url 'main:edit_product' product.pk %}">
-                        <button>
-                            Edit
-                        </button>
-                    </a>
-                    <a href="{% url 'main:delete_product' product.pk %}">
-                          <button>
-                              Delete
-                          </button>
-                      </a>
-                </td>
-			</tr>
-		{% endfor %}
-	</table>
-
-	<br />
-
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-
-{% endblock content %}
+{% endblock %}
